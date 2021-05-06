@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Kitabxana</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+
+    <link rel="stylesheet" type="text/css"
+          th:href="@{https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons}"/>
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css}">
+
+    <link type="image/jpg" th:href="@{/images/div-lib.jpg}">
+    <link th:href="@{/css/external/css/material-dashboard.css?v=2.1.2}" rel="stylesheet"/>
+</head>
+<body>
+<div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="white"
+         data-image="../static/css/external/img/sidebar-1.jpg">
+
+        <div class="logo" style="background-color: gray;"><a href="#" onclick="reloadPage()"
+                                                             class="simple-text logo-normal">
+            <span>Elektron kitabxana</span>
+        </a></div>
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li class="nav-item" id="users">
+                    <a class="nav-link" href="#" onclick="getUsers()">
+                        <i class="material-icons">account_box</i>
+                        <p>İstifadəçilər</p>
+                    </a>
+                </li>
+                <li class="nav-item" id="books">
+                    <a class="nav-link" href="#" onclick="getBooks()">
+                        <i class="material-icons">library_books</i>
+                        <p>Bütün Kitablar</p>
+                    </a>
+                </li>
+                <li class="nav-item" id="deliveryBooks">
+                    <a class="nav-link" href="#" onclick="getDeliveryBooks()">
+                        <i class="material-icons">library_add_check
+                        </i>
+                        <p>Rezerv edilmiş kitablar</p>
+                    </a>
+                </li>
+                <li class="nav-item" id="pendingBooks">
+                    <a class="nav-link" href="#" onclick="getPendingBooks()">
+                        <i class="material-icons">pending_actions
+                        </i>
+                        <p>Təsdiqi gözlənilən kitablar</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+            <div class="container-fluid">
+                <div class="navbar-wrapper" id="navbar">
+                    <a class="navbar-brand">Elektron Kitabxana Sistemi</a>
+                </div>
+                <div class="collapse navbar-collapse justify-content-end">
+                    <form class="navbar-form" id="searchForm">
+                        <div class="input-group no-border">
+                            <input type="text" value="" data-options="null" id="searchField" class="form-control"
+                                   placeholder="Axtar...">
+                            <button type="button" onclick="search()" class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">search</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+                    </form>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown" id="usernameLi">
+
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">exit_to_app</i>
+                                <p class="d-lg-none d-md-block">
+                                    Account
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="container-login100" id="divImage">
+                                    <img th:src="@{/images/div-lib.jpg}" style="height: 15%; width: 100%; border: none
+                                    !important; box-shadow:none; padding-top: 12px!important; position: relative;">
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table" id="userTable" style="display: none">
+                                        <thead class="text-primary">
+                                        <th>İstifadəçi adı</th>
+                                        <th>Tam adı</th>
+                                        <th>Telefon</th>
+                                        <th>Doğum günü</th>
+                                        <th>Əlavə edilmə tarixi</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th><a onclick="getAddModal()" data-toggle="modal" data-target="#addModalUser"
+                                               class="btn btn-default">Əlavə et</a></th>
+                                        </thead>
+
+                                    </table>
+
+                                    <table class="table" id="bookTable" style="display: none">
+                                        <thead class="text-primary">
+                                        <th>Kitabın adı</th>
+                                        <th>Müəllif</th>
+                                        <th>Dil</th>
+                                        <th>ümumi say</th>
+                                        <th>Cari say</th>
+                                        <th>Kategoriya</th>
+                                        <th>Nəşriyyat ili</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th><a onclick="getAddBookModal()" data-toggle="modal"
+                                               data-target="#addModalBook" class="btn btn-default">Əlavə et</a></th>
+                                        </thead>
+                                        <!--append search data-->
+                                    </table>
+
+                                    <table class="table" id="deliveryBookTable" style="display: none">
+                                        <thead class="text-primary">
+                                        <th>Kitabın adı</th>
+                                        <th>Kitabın müəllifi</th>
+                                        <th>Kitabın dili</th>
+                                        <th>Rezerv edən</th>
+                                        <th>Əlaqə nömrəsi</th>
+                                        <th>Əlavə edilmə tarixi</th>
+                                        <th></th>
+                                        </thead>
+                                        <!--append info data-->
+                                    </table>
+
+                                    <table class="table" id="pendingBookTable" style="display: none">
+                                        <thead class="text-primary">
+                                        <th>Kitabın adı</th>
+                                        <th>Kitabın müəllifi</th>
+                                        <th>Kitabın dili</th>
+                                        <th>Rezerv edən</th>
+                                        <th>Əlaqə nömrəsi</th>
+                                        <th>Əlavə edilmə tarixi</th>
+                                        <th></th>
+                                        <th></th>
+                                        </thead>
+                                        <!--append info data-->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- add Modal -->
+    <div class="modal fade" id="addModalUser" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">İstifadəçi əlavə etmə</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <br>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="row">
+
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">İstifadəçi adı</label>
+                                <input type="text" class="form-control" id="username" placeholder="İstifadəçi adı">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Şifrə</label>
+                                <input type="password" class="form-control" id="password" placeholder="Şifrə">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Tam ad</label>
+                                <input type="text" class="form-control" id="fullName" placeholder="Tam ad">
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Telefon</label>
+                                <input type="text" class="form-control" id="phone" placeholder="Telefon">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Doğum tarixi</label>
+                                <input type="date" class="form-control" id="dob">
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Rol</label>
+                                <select class="form-control" id="role">
+                                </select>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Geri</button>
+                    <button type="button" class="btn btn-primary" onclick="addUser()">
+                        Yadda saxla
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="addModalBook" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Kitab əlavə etmə</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <br>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="row">
+
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Kitab adı</label>
+                                <input type="text" class="form-control" id="bookName" placeholder="Kitab adı">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Müəllif</label>
+                                <input type="text" class="form-control" id="author" placeholder="Müəllif">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Dil</label>
+                                <textarea type="text" class="form-control" id="language" placeholder="Dil"></textarea>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Ümumi say</label>
+                                <input type="text" class="form-control" id="noCopiesActual" placeholder="Ümumi say">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Cari say</label>
+                                <input type="text" class="form-control" id="noCopiesCurrent" placeholder="Cari say">
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Kateqoriya</label>
+                                <select class="form-control" id="bookCategory">
+
+                                </select>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Nəşriyyat ili</label>
+                                <input type="text" class="form-control" id="publicationYear"
+                                       placeholder="Nəşriyyat ili">
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Geri</button>
+                    <button type="button" class="btn btn-primary" onclick="addBook()">
+                        Yadda saxla
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="updateModalUser" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Məlumatların yenilənməsi - İstifadəçi</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="editFormBody">
+                        <div class="row">
+                            <div class="form-group col-md-8" style="display: none">
+                                <label class="col-form-label">Id</label>
+                                <input type="text" class="form-control" id="userIdUpdate" placeholder="İd">
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">İstifadəçi adı</label>
+                                <input type="text" class="form-control" id="usernameUpdate"
+                                       placeholder="İstifadəçi adı">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Şifrə</label>
+                                <input type="password" class="form-control" id="passwordUpdate" placeholder="Şifrə">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Tam ad</label>
+                                <input type="text" class="form-control" id="fullNameUpdate" placeholder="Tam ad">
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Telefon</label>
+                                <input type="text" class="form-control" id="phoneUpdate" placeholder="Telefon">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Doğum tarixi</label>
+                                <input type="date" class="form-control" id="dobUpdate">
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Rol</label>
+                                <select class="form-control" id="roleUpdate">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Geri</button>
+                    <button type="button" class="btn btn-primary" onclick="updateUser()">
+                        Yadda saxla
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="updateModalBook" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Məlumatların yenilənməsi - Kitab</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+
+                            <div class="form-group col-md-8" style="display: none">
+                                <label class="col-form-label">Id</label>
+                                <input type="text" class="form-control" id="bookIdUpdate" placeholder="İd">
+                            </div>
+
+
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Kitab adı</label>
+                                <input type="text" class="form-control" id="bookNameUpdate" placeholder="Kitab adı">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Müəllif</label>
+                                <input type="text" class="form-control" id="authorUpdate" placeholder="Müəllif">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Dil</label>
+                                <textarea type="text" class="form-control" id="languageUpdate"
+                                          placeholder="Dil"></textarea>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Ümumi say</label>
+                                <input type="text" class="form-control" id="noCopiesActualUpdate"
+                                       placeholder="Ümumi say">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Cari say</label>
+                                <input type="text" class="form-control" id="noCopiesCurrentUpdate"
+                                       placeholder="Cari say">
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Kateqoriya</label>
+                                <select class="form-control" id="bookCategoryUpdate">
+
+                                </select>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-form-label">Nəşriyyat ili</label>
+                                <input type="text" class="form-control" id="publicationYearUpdate"
+                                       placeholder="Nəşriyyat ili">
+                            </div>
+                            <!--                            <div class="form-group col-md-8" style="display: none">-->
+                            <!--                                <label class="col-form-label">Id</label>-->
+                            <!--                                <input type="text" class="form-control" id="bookIdUpdate" placeholder="İd">-->
+                            <!--                            </div>-->
+                            <!--                            <div class="form-group col-md-8">-->
+                            <!--                                <label class="col-form-label">Kitabın adı</label>-->
+                            <!--                                <input type="text" class="form-control" id="bookNameUpdate" placeholder="Kitabın adı">-->
+                            <!--                            </div>-->
+                            <!--                            <div class="form-group col-md-8">-->
+                            <!--                                <label class="col-form-label">Müəllif</label>-->
+                            <!--                                <input type="text" class="form-control" id="authorUpdate" placeholder="Müəllif">-->
+                            <!--                            </div>-->
+                            <!--                            <div class="form-group col-md-8">-->
+                            <!--                                <label class="col-form-label">Ətraflı məlumat</label>-->
+                            <!--                                <textarea type="text" class="form-control" id="aboutUpdate"-->
+                            <!--                                          placeholder="Ətraflı"></textarea>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="form-group col-md-8">-->
+                            <!--                                <label class="col-form-label">Nəşr edilmə zamanı</label>-->
+                            <!--                                <input type="date" class="form-control" id="createDateUpdate">-->
+                            <!--                            </div>-->
+                            <!--                            <div class="form-group col-md-8">-->
+                            <!--                                <label class="col-form-label">Status</label>-->
+                            <!--                                <select class="form-control" id="statusUpdate">-->
+
+                            <!--                                </select>-->
+                            <!--                            </div>-->
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Geri</button>
+                    <button type="button" class="btn btn-primary" onclick="updateBook()">
+                        Yadda saxla
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--<script th:src="@{/js/internal/jquery.min.js}"></script>-->
+<script th:src="@{/js/internal/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/css/external/js/core/bootstrap-material-design.min.js}"></script>
+<script th:src="@{/js/internal/my.js}"></script>
+</body>
+</html>

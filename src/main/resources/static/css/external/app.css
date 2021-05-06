@@ -1,0 +1,258 @@
+     /* Wrapper for page content to push down footer */
+     html, body {
+        height: 100%; /* The html and body elements cannot have any padding or margin. */
+    }
+
+    /* Wrapper for page content to push down footer */
+    #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%; /* Negative indent footer by it's height */
+        margin: 0 auto -60px;
+    }
+
+    /* Set the fixed height of the footer here */
+    #push, #footer {
+        height: 60px;
+    }
+
+    #footer {
+        background-color: #f5f5f5;
+    }
+
+    /* Lastly, apply responsive CSS fixes as necessary */
+    @media (max-width: 767px) {
+        #footer {
+            margin-left: -20px;
+            margin-right: -20px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
+
+
+@media screen {
+.gecko #phMain .customMsgHeader ~ .msg_detailCountFrame .msg_count_items {
+clear: both;
+}
+.gecko #phMain #divRecipientType {
+padding-left: 20px;
+}
+.gecko #phMain #divRecipientType .pull-right:first-child {
+width: 52% !important;
+font-size: 12px;
+}
+.gecko #phMain #divRecipientType .pull-right:first-child a {
+line-height: 30px !important;
+color: #adadad;
+}
+.gecko #phMain #divRecipientType .pull-right:first-childhover {
+color: black !important;
+}
+.gecko #phMain #divRecipientType #rblAliciTuru {
+margin-left: 0% !important;
+width: 47%;
+float: left;
+margin-top: 10px;
+}
+.gecko #phMain #divRecipientType #rblAliciTuru span[rel="tooltip"] {
+width: 100% !important;
+}
+.gecko #phMain #divRecipientType #rblAliciTuru span[rel="tooltip"] label {
+font-size: 13px !important;
+}
+
+@media screen and (min-width: 1281px) {
+.gecko span[rel="tooltip"] label {
+margin-top: 3px;
+}
+.gecko #divTestRecipients strong {
+padding-bottom: 10px;
+}
+.gecko #divSendType {
+padding-left: 35px;
+}
+.gecko #divSendType #rblGonderimTuru {
+padding-top: 0 !important;
+}
+.gecko #divSendType #rblGonderimTuru span[rel="tooltip"] label {
+margin-top: 3px;
+}
+.gecko #divSendType #rblAliciTuru {
+padding-top: 0 !important;
+}
+.gecko #divSendType #rblAliciTuru span[rel="tooltip"] label {
+margin-top: 3px;
+}
+.gecko .selectionFrame .cbLastSendFrame {
+margin-left: 6% !important;
+padding-top: 17px;
+}
+.gecko .selectionFrame #divMessageBody {
+padding-top: 10% !important;
+}
+.gecko .selectionFrame #divMessageBody strong {
+width: 100%;
+float: left;
+clear: both;
+}
+.gecko .selectionFrame #divMessageBody #txtMessageBody {
+width: 100%;
+float: left;
+left: 0;
+max-width: 400px !important;
+min-width: 400px !important;
+margin-left: 0 !important;
+clear: both;
+}
+.gecko .selectionFrame #divMessageBody .msg_count_items.msg_count_items_custom {
+clear: both;
+margin-left: 25%;
+padding-left: 0;
+text-align: left !important;
+}
+.gecko .selectionFrame ~ tr #btnSendTest {
+margin-left: 25% !important;
+font-size: 15px !important;
+padding: 7px 18px;
+font-weight: bold;
+}
+.gecko #phMain table tbody tr:nth-child(2) td:first-child strong {
+line-height: 65px !important;
+}
+.gecko #phMain table tbody tr:nth-child(2) td:nth-child(2) #rblGonderimZamani {
+margin-top: 50px;
+margin-left: 25px !important;
+}
+.gecko #phMain table tbody tr:nth-child(2) td:nth-child(3) {
+padding-top: 41px !important;
+}
+}
+@media screen and (min-width: 1023px) {
+.gecko span[rel="tooltip"] label {
+margin-top: 3px;
+}
+.gecko #divTestRecipients strong {
+width: 100%;
+float: left;
+clear: both;
+padding-bottom: 10px;
+}
+.gecko #divTestRecipients #txtTestReceivers {
+width: 100%;
+float: left;
+left: 0;
+max-width: 400px !important;
+min-width: 400px !important;
+clear: both;
+}
+.gecko #divSendType {
+padding-left: 35px;
+}
+.gecko #divSendType #rblGonderimTuru {
+padding-top: 0 !important;
+}
+.gecko #divSendType #rblGonderimTuru span[rel="tooltip"] label {
+margin-top: 3px;
+}
+.gecko #divSendType #rblAliciTuru {
+padding-top: 0 !important;
+}
+.gecko #divSendType #rblAliciTuru span[rel="tooltip"] label {
+margin-top: 3px;
+}
+.gecko .selectionFrame .cbLastSendFrame {
+margin-left: 6% !important;
+padding-top: 17px;
+}
+.gecko .selectionFrame #divMessageBody {
+padding-top: 10px !important;
+}
+.gecko .selectionFrame #divMessageBody strong {
+width: 100%;
+float: left;
+clear: both;
+}
+.gecko .selectionFrame #divMessageBody #txtMessageBody {
+width: 100%;
+float: left;
+left: 0;
+max-width: 400px !important;
+min-width: 400px !important;
+margin-left: 0 !important;
+clear: both;
+}
+.gecko .selectionFrame #divMessageBody .msg_count_items.msg_count_items_custom {
+clear: both;
+margin-left: 25%;
+padding-left: 0;
+text-align: left !important;
+}
+.gecko .selectionFrame ~ tr #btnSendTest {
+margin-left: 25% !important;
+font-size: 15px !important;
+padding: 7px 18px;
+font-weight: bold;
+}
+.gecko #phMain table tbody tr:nth-child(2) td:first-child {
+padding-top: 0 !important;
+}
+.gecko #phMain table tbody tr:nth-child(2) td:first-child strong {
+line-height: 50px !important;
+}
+.gecko #phMain table tbody tr:nth-child(2) td:nth-child(2) {
+padding-top: 24px !important;
+}
+.gecko #phMain table tbody tr:nth-child(2) td:nth-child(2) #rblGonderimZamani {
+margin-top: 35px;
+margin-left: 25px !important;
+}
+.gecko #phMain table tbody tr:nth-child(2) td:nth-child(3) {
+padding-top: 10px !important;
+}
+}
+
+span.radio {
+    padding: 0px;
+}
+
+    span.radio > input[type="radio"] {
+        margin: 8px 5px 7px 0px;
+    }
+
+    span.radio > strong {
+        float: left;
+        margin-right: 5px;
+        padding: 0px 5px 0px 10px;
+    }
+
+div.phoneBody {
+    margin-left: 5px;
+    background-position: center;
+    background: url(image/phone.png) no-repeat;
+    width: 250px;
+    height: 400px;
+}
+
+    div.phoneBody div.sender {
+        position: fixed;
+        margin-top: 55px;
+        margin-left: 18px;
+        width: 192px;
+        background-color: #000;
+        color: #6B788D;
+        height: 18px;
+        line-height: 18px;
+    }
+
+    div.phoneBody div.messageBody {
+        position: fixed;
+        margin-top: 75px;
+        margin-left: 25px;
+        width: 185px;
+        max-height: 100px;
+        font-size: 11px;
+        word-wrap: break-word;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }}
