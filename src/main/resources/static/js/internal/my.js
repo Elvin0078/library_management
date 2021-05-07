@@ -646,18 +646,6 @@ function takePendingBook(trId) {
     });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 function deletePendingBook(trId) {
     $.ajax({
         url: getBaseUrl() + 'api/tr/updateTransactionStatus',
@@ -849,8 +837,27 @@ function deleteDeliveryBookUser(trİd) {
 }
 
 
+function deletePendingBookUser(trİd) {
+
+    $.ajax({
+        url: getBaseUrl() + 'api/tr/updateTransactionStatus',
+        data: 'trId=' + trİd + '&statusId=' + 6,
+        dataType: 'JSON',
+        method: 'GET',
+        success: function (data) {
+            if (data === true) {
+                getPendingBooksUser();
+            }
+
+        },
+        error: function () {
+            alert("Xeta bash verdi");
+
+        }
+    });
 
 
+}
 
 
 
