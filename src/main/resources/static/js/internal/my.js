@@ -430,7 +430,7 @@ function updateUser() {
     let phone = $("#phoneUpdate").val();
     let role = $("#roleUpdate").val();
     let dob = $("#dobUpdate").val();
-    alert(username);
+
     $.ajax({
         url: getBaseUrl() + 'api/user/userByName',
         method: 'GET',
@@ -619,7 +619,7 @@ function givePendingBook(trId) {
         dataType: 'JSON',
         success: function (data) {
             if (data === true) {
-                alert(data);
+
                 getPendingBooks();
             }
         },
@@ -636,7 +636,7 @@ function takePendingBook(trId) {
         dataType: 'JSON',
         success: function (data) {
             if (data === true) {
-                alert(data);
+
                 getPendingBooks();
             }
         },

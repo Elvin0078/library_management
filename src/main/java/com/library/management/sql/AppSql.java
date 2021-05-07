@@ -64,11 +64,13 @@ public class AppSql {
     public static final String ADD_TRANSACTION = "Insert into Transaction_Details (Tr_Id,User_id,Book_Id,tr_Date,Status)\n" +
             "values (default,:user_id,:book_id,default,:status);";
 
-    public static final String  UPDATE_TR_STATUS="update Transaction_Details set status=:status where Tr_Id = :tr_id;";
+    public static final String UPDATE_TR_STATUS="update Transaction_Details set status=:status where Tr_Id = :tr_id;";
 
     public static final String GET_TRANSACTION_BY_ID =GET_TRANSACTİON_MAIN + " where Tr_Id= :tr_id;";
 
     public  static final String GET_TR_DELIVERY_BY_USER=GET_TRANSACTİON_MAIN+ " where u.user_Id=:userId and (t.Status=3 or t.Status=5) ;";
 
     public static final  String GET_TR_PENDING_BY_USER=GET_TRANSACTİON_MAIN+ " where t.Status=1 and u.user_Id=:userId ;";
+
+
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 @Service
 public class DataConverter {
     public Date stringToDate(String stringDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
             date = sdf.parse(stringDate);
