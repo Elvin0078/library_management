@@ -96,4 +96,15 @@ public class BookServiceImpl implements BookService {
             return false;
         }
     }
+
+    @Override
+    public List<Book> getBookSearch(String keyword) {
+        try {
+            return bookRepository.getBookSearch(keyword);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+
+        }
+    }
 }

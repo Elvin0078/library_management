@@ -7,6 +7,7 @@ import com.library.management.repository.Inter.TransactionRepository;
 import com.library.management.repository.Inter.UserRepository;
 import com.library.management.service.Inter.BookService;
 import com.library.management.util.DataConverter;
+import com.library.management.util.NumericChecker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,16 +34,19 @@ class ManagementApplicationTests {
     void contextLoads() {
 
         try {
-            Transaction transaction = new Transaction();
 
-            Book book = new Book();
-            User user= new User();
-            book.setId(1L);
-            user.setUserId(1L);
-            transaction.setStatus(1L);
-            transaction.setBook(book);
-            transaction.setUser(user);
-            System.out.println(transactionRepository.getDeliveryTransactionByUserId(4L));
+            System.out.println( bookRepository.getBookSearch("Niz").toString());
+
+//            Transaction transaction = new Transaction();
+//
+//            Book book = new Book();
+//            User user= new User();
+//            book.setId(1L);
+//            user.setUserId(1L);
+//            transaction.setStatus(1L);
+//            transaction.setBook(book);
+//            transaction.setUser(user);
+//            System.out.println(transactionRepository.getDeliveryTransactionByUserId(4L));
 
 //            User user = new User();
 //            UserRole userRole= new UserRole();

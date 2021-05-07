@@ -21,5 +21,7 @@ public interface BookRepository {
 
     boolean updateBookCurrentCount(Long bookId,Long count) throws Exception;
 
+    List<Book> getBookSearch(String keyword) throws Exception;
+
 
 }

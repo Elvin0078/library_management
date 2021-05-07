@@ -5,6 +5,7 @@ import com.library.management.model.Book;
 import com.library.management.model.BookCategory;
 import com.library.management.repository.Inter.BookRepository;
 import com.library.management.sql.AppSql;
+import com.library.management.util.NumericChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -18,13 +19,13 @@ public class BookRepositoryImpl implements BookRepository {
 
     public NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     public final BookMapper bookMapper;
-
+    public NumericChecker numericChecker;
 
     @Autowired
-    public BookRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate, BookMapper bookMapper) {
+    public BookRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate, BookMapper bookMapper, NumericChecker numericChecker) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.bookMapper = bookMapper;
-
+        this.numericChecker = numericChecker;
     }
 
 
@@ -101,7 +102,6 @@ public class BookRepositoryImpl implements BookRepository {
             mapSqlParameterSource.addValue("Category_Id", book.getBookCategory().getId());
             mapSqlParameterSource.addValue("Publication_year", book.getPublicationyear());
 
-            System.out.println("===============   " + mapSqlParameterSource);
             int count = namedParameterJdbcTemplate.update(AppSql.UPDATE_BOOK, mapSqlParameterSource);
             return count > 0;
 
@@ -147,6 +147,20 @@ public class BookRepositoryImpl implements BookRepository {
         int isUpdate = namedParameterJdbcTemplate.update(AppSql.UPDATE_BOOK_CURRENT_COUNT, mapSqlParameterSource);
 
         return isUpdate > 0;
+    }
+
+    @Override
+    public List<Book> getBookSearch(String keyword) throws Exception {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("keyword","%"+keyword+"%");
+        List<Book> bookList=namedParameterJdbcTemplate.query(AppSql.GET_BOOK_LIST_SEARCH,mapSqlParameterSource,bookMapper::getBookList);
+
+        if (numericChecker.isNumeric(keyword)) {
+            System.out.println(true);
+        }
+
+
+        return bookList;
     }
 
 

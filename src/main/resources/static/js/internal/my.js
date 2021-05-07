@@ -861,7 +861,43 @@ function deletePendingBookUser(trİd) {
 
 
 
+function searchBook(){
 
+    remove();
+    removeUserTable();
+    removePendingBookTable();
+    removeDeliveryBookTable();
+    showBookTable();
+    $.ajax({
+        url: getBaseUrl() + 'api/book/searchBook',
+        type: 'GET',
+        data:'keyword='+$('#searchField').val(),
+        dataType: 'JSON',
+        success: function (data) {
+
+            var event_data = '';
+            $.each(data, function (index, value) {
+                event_data += '<tbody class="ui-widget-content">';
+                event_data += '   <tr>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.name + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.author + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.language + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.noCopiesActual + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.noCopiesCurrent + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.bookCategory.name + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.publicationyear + '</td>';
+
+                event_data += '      <td>';
+                event_data += '         <a onclick="editBook(' + value.id + ')" data-toggle="modal" data-target="#updateModalBook" class="btn btn-primary" >Dəyiş</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                event_data += '         <a class="btn btn-danger" onclick="deleteBook(' + value.id + ')">Sil</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                event_data += '      </td>';
+                event_data += '   </tr>';
+                event_data += '</tbody>';
+            });
+            $("#bookTable").append(event_data);
+        }
+    })
+}
 
 
 

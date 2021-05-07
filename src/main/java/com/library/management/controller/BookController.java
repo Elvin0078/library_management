@@ -100,5 +100,13 @@ public class BookController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/searchBook")
+    public  ResponseEntity<?> searchBook(@RequestParam("keyword")String keyword){
+        List<Book>bookList = bookService.getBookSearch(keyword);
+        return new ResponseEntity<>(bookList,HttpStatus.OK);
+
+    }
+
+
 
 }

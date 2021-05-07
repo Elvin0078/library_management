@@ -20,4 +20,5 @@ public interface BookService {
 
     boolean updateBookCurrentCount(Long bookId,Long count);
 
+    List<Book> getBookSearch(String keyword) ;
 }
