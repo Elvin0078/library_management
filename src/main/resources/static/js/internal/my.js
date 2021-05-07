@@ -522,11 +522,11 @@ function getBooksUser() {
                 event_data += '      <td>&nbsp;&nbsp;' + value.bookCategory.name + '</td>';
                 event_data += '      <td>&nbsp;&nbsp;' + value.publicationyear + '</td>';
 
-                if(value.noCopiesCurrent > 0){
+                if (value.noCopiesCurrent > 0) {
                     event_data += '      <td>';
                     event_data += '         <a onclick="markBook(' + value.id + ')" class="btn btn-primary" >Rezerv et</a>&nbsp;&nbsp;&nbsp;&nbsp;';
                     event_data += '      </td>';
-                }else{
+                } else {
                     event_data += '      <td>';
                     event_data += '      </td>';
                 }
@@ -540,25 +540,25 @@ function getBooksUser() {
 }
 
 
-function markBook(id){
+function markBook(id) {
     $.ajax({
         url: getBaseUrl() + 'api/tr/addTransaction',
-        method:'GET',
-        data: "bookId="+id,
+        method: 'GET',
+        data: "bookId=" + id,
         dataType: 'JSON',
         success: function (data) {
-            if(data === true){
+            if (data === true) {
                 getBooksUser();
             }
         },
-        error:function (){
+        error: function () {
             alert('error');
         }
     });
 }
 
 
-function getPendingBooks(){
+function getPendingBooks() {
     remove();
     //
     removeUserTable();
@@ -575,19 +575,30 @@ function getPendingBooks(){
 
             var event_data = '';
             $.each(data, function (index, value) {
+                var statusName;
+                if (value.status == 1) {
+                    statusName = "Götürülmək üçün gözləmədə";
+                } else if (value.status == 5) {
+                    statusName = "Qaytarilmaq üçün gğzləmədə";
+                }
 
                 event_data += '<tbody class="ui-widget-content">';
                 event_data += '   <tr>';
                 event_data += '      <td>&nbsp;&nbsp;' + value.book.name + '</td>';
-                event_data += '      <td>&nbsp;&nbsp;' +value.book.author + '</td>';
-                event_data += '      <td>&nbsp;&nbsp;' +value.book.language + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.book.author + '</td>';
                 event_data += '      <td>&nbsp;&nbsp;' + value.user.fullname + '</td>';
-                event_data += '      <td>&nbsp;&nbsp;' +value.user.phone + '</td>';
-                event_data += '      <td>&nbsp;&nbsp;' +value.trDate + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.user.phone + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.trDate + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + statusName + '</td>';
+
 
                 event_data += '      <td>';
                 event_data += '         <a class="btn btn-danger" onclick="deletePendingBook(' + value.trId + ')">Sil</a>&nbsp;&nbsp;&nbsp;&nbsp;';
-                event_data += '         <a class="btn btn-success" onclick="accessPendingBook(' + value.trId + ')">Təsdiqlə</a>';
+                if (value.status == 1) {
+                    event_data += '         <a class="btn btn-success" onclick="givePendingBook(' + value.trId + ')">Təsdiqlə</a>';
+                } else if (value.status == 5) {
+                    event_data += '         <a class="btn btn-success" onclick="takePendingBook(' + value.trId + ')">Təsdiqlə</a>';
+                }
                 event_data += '      </td>';
                 event_data += '   </tr>';
                 event_data += '</tbody>';
@@ -600,36 +611,65 @@ function getPendingBooks(){
 }
 
 
-function accessPendingBook(trId){
+function givePendingBook(trId) {
     $.ajax({
         url: getBaseUrl() + 'api/tr/markTransactionDelivery',
-        method:'GET',
-        data: "trId="+trId,
+        method: 'GET',
+        data: "trId=" + trId,
         dataType: 'JSON',
         success: function (data) {
-            if(data === true){
+            if (data === true) {
                 alert(data);
                 getPendingBooks();
             }
         },
-        error:function (){
+        error: function () {
+            alert('error');
+        }
+    });
+}
+function takePendingBook(trId) {
+    $.ajax({
+        url: getBaseUrl() + 'api/tr/unMarkTransactionDelivery',
+        method: 'GET',
+        data: "trId=" + trId,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data === true) {
+                alert(data);
+                getPendingBooks();
+            }
+        },
+        error: function () {
             alert('error');
         }
     });
 }
 
-function deletePendingBook(trId){
+
+
+
+
+
+
+
+
+
+
+
+
+function deletePendingBook(trId) {
     $.ajax({
-        url:getBaseUrl()+'api/tr/updateTransactionStatus',
-        method:'GET',
-        data:"trId="+trId+"&statusId="+0,
-        dataType:'JSON',
-        success:function (data){
-            if (data===true){
+        url: getBaseUrl() + 'api/tr/updateTransactionStatus',
+        method: 'GET',
+        data: "trId=" + trId + "&statusId=" + 0,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data === true) {
                 getPendingBooks();
             }
         },
-        error: function (){
+        error: function () {
             alert("Xeta bash verdi");
 
         }
@@ -639,7 +679,7 @@ function deletePendingBook(trId){
 
 }
 
-function getDeliveryBooks(){
+function getDeliveryBooks() {
     remove();
     //
     removeUserTable();
@@ -658,11 +698,11 @@ function getDeliveryBooks(){
                 event_data += '<tbody class="ui-widget-content">';
                 event_data += '   <tr>';
                 event_data += '      <td>&nbsp;&nbsp;' + value.book.name + '</td>';
-                event_data += '      <td>&nbsp;&nbsp;' +value.book.author + '</td>';
-                event_data += '      <td>&nbsp;&nbsp;' +value.book.language + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.book.author + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.book.language + '</td>';
                 event_data += '      <td>&nbsp;&nbsp;' + value.user.fullname + '</td>';
-                event_data += '      <td>&nbsp;&nbsp;' +value.user.phone + '</td>';
-                event_data += '      <td>&nbsp;&nbsp;' +value.trDate + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.user.phone + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.trDate + '</td>';
                 event_data += '      <td>';
                 event_data += '         <a class="btn btn-danger" onclick="deleteDeliveryBook(' + value.trId + ')">Ləğv et</a>&nbsp;&nbsp;&nbsp;&nbsp;';
                 event_data += '      </td>';
@@ -674,18 +714,18 @@ function getDeliveryBooks(){
     })
 }
 
-function deleteDeliveryBook(trId){
+function deleteDeliveryBook(trId) {
     $.ajax({
-        url:getBaseUrl()+'api/tr/unMarkTransactionDelivery',
-        method:'GET',
-        data:"trId="+trId+"&statusId="+4,
-        dataType:'JSON',
-        success:function (data){
-            if (data===true){
+        url: getBaseUrl() + 'api/tr/unMarkTransactionDelivery',
+        method: 'GET',
+        data: "trId=" + trId + "&statusId=" + 4,
+        dataType: 'JSON',
+        success: function (data) {
+            if (data === true) {
                 getDeliveryBooks();
             }
         },
-        error: function (){
+        error: function () {
             alert("Xeta bash verdi");
 
         }
@@ -694,10 +734,9 @@ function deleteDeliveryBook(trId){
     })
 
 
-
 }
 
-function getDeliveryBooksUser(){
+function getDeliveryBooksUser() {
     remove();
     //
     removeBookTable();
@@ -710,8 +749,20 @@ function getDeliveryBooksUser(){
         type: 'GET',
         dataType: 'JSON',
         success: function (data) {
+            var statusName;
+
+
             var event_data = '';
             $.each(data, function (index, value) {
+
+
+                if (value.status == 3) {
+                    statusName = "Istifadəçidə";
+                } else if (value.status == 5) {
+                    statusName = "Qaytarilmaq üçün gözləmədə";
+                }
+
+
                 event_data += '<tbody class="ui-widget-content">';
                 event_data += '   <tr>';
                 event_data += '      <td>&nbsp;&nbsp;' + value.book.name + '</td>';
@@ -719,6 +770,8 @@ function getDeliveryBooksUser(){
                 event_data += '      <td>&nbsp;&nbsp;' + value.book.language + '</td>';
                 // event_data += '      <td>&nbsp;&nbsp;' + value.book.bookCategory.name + '</td>';
                 // event_data += '      <td>&nbsp;&nbsp;' + value.book.publicationyear + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + statusName + '</td>';
+                ;
                 event_data += '                                                  <td>';
                 event_data += '                                                   <td>';
                 event_data += '                                                   <td>';
@@ -734,7 +787,7 @@ function getDeliveryBooksUser(){
     })
 }
 
-function getPendingBooksUser(){
+function getPendingBooksUser() {
     remove();
     //
     removeBookTable();
@@ -771,4 +824,42 @@ function getPendingBooksUser(){
     })
 
 }
+
+
+function deleteDeliveryBookUser(trİd) {
+
+    $.ajax({
+        url: getBaseUrl() + 'api/tr/updateTransactionStatus',
+        data: 'trId=' + trİd + '&statusId=' + 5,
+        dataType: 'JSON',
+        method: 'GET',
+        success: function (data) {
+            if (data === true) {
+                getDeliveryBooksUser();
+            }
+
+        },
+        error: function () {
+            alert("Xeta bash verdi");
+
+        }
+    });
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -50,14 +50,14 @@ public class AppSql {
 
     public static final String GET_USER_ROLE_LIST = "Select Role_Id,Role_Name from Role_Details;";
 
-    public static final String GET_TRANSACTİON_MAIN = "Select u.user_Id,u.Full_Name,u.Username,u.Date_Of_Birthday,u.Registration_Date,u.phone,b.Book_Id,b.Name,b.Author,b.Language,b.No_Copies_Actual,b.No_Copies_Current,b.publication_Year,t.tr_id,t.Tr_Date\n" +
+    public static final String GET_TRANSACTİON_MAIN = "Select u.user_Id,u.Full_Name,u.Username,u.Date_Of_Birthday,u.Registration_Date,u.phone,b.Book_Id,b.Name,b.Author,b.Language,b.No_Copies_Actual,b.No_Copies_Current,b.publication_Year,t.tr_id,t.Tr_Date,t.Status\n" +
             "from Transaction_Details t \n" +
             "\tInner join User_details u\n" +
             "    on  t.User_Id =u.User_Id\n" +
             "    inner join Book_Details b\n" +
             "\ton t.Book_Id = b.Book_Id";
 
-    public static final String GET_TR_PENDING =GET_TRANSACTİON_MAIN+" where t.Status=1";
+    public static final String GET_TR_PENDING =GET_TRANSACTİON_MAIN+" where t.Status=1 or t.Status=5";
 
     public static final String GET_TR_DELIVERY =GET_TRANSACTİON_MAIN+" where t.Status=3";
 
@@ -68,7 +68,7 @@ public class AppSql {
 
     public static final String GET_TRANSACTION_BY_ID =GET_TRANSACTİON_MAIN + " where Tr_Id= :tr_id;";
 
-    public  static final String GET_TR_DELIVERY_BY_USER=GET_TRANSACTİON_MAIN+ " where t.Status=3 and u.user_Id=:userId ;";
+    public  static final String GET_TR_DELIVERY_BY_USER=GET_TRANSACTİON_MAIN+ " where u.user_Id=:userId and (t.Status=3 or t.Status=5) ;";
 
     public static final  String GET_TR_PENDING_BY_USER=GET_TRANSACTİON_MAIN+ " where t.Status=1 and u.user_Id=:userId ;";
 }

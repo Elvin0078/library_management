@@ -37,7 +37,7 @@ public class TransactionMapper {
 
             transaction.setTrId(rs.getLong("t.tr_id"));
             transaction.setTrDate(rs.getDate("t.Tr_Date"));
-//          transaction.setStatus(rs.getInt(":t.status"));
+            transaction.setStatus(rs.getLong("t.Status"));
             transaction.setBook(book);
             transaction.setUser(user);
             transactionList.add(transaction);
@@ -69,7 +69,7 @@ public class TransactionMapper {
 
             transaction.setTrId(rs.getLong("t.tr_id"));
             transaction.setTrDate(rs.getDate("t.Tr_Date"));
-//          transaction.setStatus(rs.getInt(":t.status"));
+            transaction.setStatus(rs.getLong("t.Status"));
             transaction.setBook(book);
             transaction.setUser(user);
 
