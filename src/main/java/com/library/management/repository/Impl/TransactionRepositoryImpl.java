@@ -2,7 +2,6 @@ package com.library.management.repository.Impl;
 
 import com.library.management.mapper.TransactionMapper;
 import com.library.management.model.Transaction;
-import com.library.management.model.User;
 import com.library.management.repository.Inter.TransactionRepository;
 import com.library.management.service.Inter.BookService;
 import com.library.management.service.Inter.TransactionService;

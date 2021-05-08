@@ -135,8 +135,9 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getUserSearch(String keyword) throws Exception {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("keyword", keyword);
+        mapSqlParameterSource.addValue("keyword", "%" + keyword + "%");
         List<User> userList = namedParameterJdbcTemplate.query(AppSql.GET_USERS_SEARCH, mapSqlParameterSource, userMapper::getUserList);
+
         return userList;
     }
 }

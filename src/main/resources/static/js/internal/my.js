@@ -494,8 +494,8 @@ function deleteUser(userId) {
 
 function getBooksUser() {
 
-    // document.getElementById('searchField').value = '';
-    // document.getElementById('searchField').dataset.options = 'book';
+    document.getElementById('searchField').value = '';
+    document.getElementById('searchField').dataset.options = 'book';
     remove();
     //
 
@@ -581,7 +581,7 @@ function getPendingBooks() {
                 if (value.status == 1) {
                     statusName = "Götürülmək üçün gözləmədə";
                 } else if (value.status == 5) {
-                    statusName = "Qaytarilmaq üçün gğzləmədə";
+                    statusName = "Qaytarilmaq üçün gözləmədə";
                 }
 
                 event_data += '<tbody class="ui-widget-content">';
@@ -870,6 +870,7 @@ function searchBook() {
     removePendingBookTable();
     removeDeliveryBookTable();
     showBookTable();
+
     $.ajax({
         url: getBaseUrl() + 'api/book/searchBook',
         type: 'GET',
@@ -903,14 +904,15 @@ function searchBook() {
 
 
 function searchUser() {
-
     remove();
     removePendingBookTable();
     removeDeliveryBookTable();
     removeBookTable();
     showUserTable();
+
+
     $.ajax({
-        url: getBaseUrl() + 'api/book/searchUser',
+        url: getBaseUrl() + 'api/user/searchUser',
         type: 'GET',
         data: 'keyword=' + $('#searchField').val(),
         dataType: 'JSON',
@@ -931,34 +933,27 @@ function searchUser() {
                 event_data += '      </td>';
                 event_data += '   </tr>';
                 event_data += '</tbody>';
+
             });
-            $("#bookTable").append(event_data);
+            $("#userTable").append(event_data);
         }
+
     })
+
 }
 
 
 function searchControl() {
-    document.getElementById('searchField').dataset.options = 'book';
 
+    if (document.getElementById('searchField').dataset.options === 'book') {
 
+        searchBook();
+    } else if (document.getElementById('searchField').dataset.options === 'user') {
 
-    if (true) {
-       searchBook();
-
-    } else if (false) {
         searchUser();
+
     }
 
-
 }
-
-
-
-
-
-
-
-
 
 

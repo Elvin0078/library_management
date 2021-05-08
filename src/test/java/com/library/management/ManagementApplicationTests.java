@@ -6,11 +6,14 @@ import com.library.management.repository.Inter.BookRepository;
 import com.library.management.repository.Inter.TransactionRepository;
 import com.library.management.repository.Inter.UserRepository;
 import com.library.management.service.Inter.BookService;
+import com.library.management.service.Inter.UserService;
 import com.library.management.util.DataConverter;
 import com.library.management.util.NumericChecker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.security.PublicKey;
 
 @SpringBootTest
 class ManagementApplicationTests {
@@ -25,6 +28,8 @@ class ManagementApplicationTests {
     public UserRepository userRepository;
 
     @Autowired
+    public UserService userService;
+    @Autowired
     public DataConverter dataConverter;
 
     @Autowired
@@ -35,7 +40,7 @@ class ManagementApplicationTests {
 
         try {
 
-            System.out.println( bookRepository.getBookSearch("Niz").toString());
+            System.out.println(userService.getUserSearch("Elvin").toString());
 
 //            Transaction transaction = new Transaction();
 //
