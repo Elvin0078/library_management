@@ -43,11 +43,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getUserById(Long userId) throws  Exception{
-      MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-      mapSqlParameterSource.addValue("userId",userId);
-      User user ;
-      user=namedParameterJdbcTemplate.query(AppSql.GET_USER_BY_ID,mapSqlParameterSource,userMapper::getUser);
+    public User getUserById(Long userId) throws Exception {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("userId", userId);
+        User user;
+        user = namedParameterJdbcTemplate.query(AppSql.GET_USER_BY_ID, mapSqlParameterSource, userMapper::getUser);
         return user;
     }
 
@@ -55,13 +55,12 @@ public class UserRepositoryImpl implements UserRepository {
     public User loginUser(String username, String password) throws Exception {
 
 
-            MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-            mapSqlParameterSource.addValue("username", username);
-            mapSqlParameterSource.addValue("password", password);
-            User user = namedParameterJdbcTemplate.query(AppSql.LOGIN_USER, mapSqlParameterSource, userMapper::getUser);
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("username", username);
+        mapSqlParameterSource.addValue("password", password);
+        User user = namedParameterJdbcTemplate.query(AppSql.LOGIN_USER, mapSqlParameterSource, userMapper::getUser);
 
-            return user;
-
+        return user;
 
 
     }
@@ -69,11 +68,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getUserByLogin(String username) {
 
-            MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-            mapSqlParameterSource.addValue("username", username);
-            System.out.println(username + " username");
-            User user = namedParameterJdbcTemplate.query(AppSql.GET_USER_BY_LOGIN, mapSqlParameterSource, userMapper::getUser);
-            return user;
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("username", username);
+        User user = namedParameterJdbcTemplate.query(AppSql.GET_USER_BY_LOGIN, mapSqlParameterSource, userMapper::getUser);
+        return user;
 
     }
 
@@ -81,18 +79,18 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean addUser(User user) throws Exception {
 
 
-            if (getUserByLogin(user.getUsername()).getUserId() != null) {
-                return false;
-            }
-            MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-            mapSqlParameterSource.addValue("full_name", user.getFullname());
-            mapSqlParameterSource.addValue("username", user.getUsername());
-            mapSqlParameterSource.addValue("password", md5Generatorl.generateMd5(user.getPassword()));
-            mapSqlParameterSource.addValue("phone", user.getPhone());
-            mapSqlParameterSource.addValue("date_of_birthday", user.getDOB());
-            mapSqlParameterSource.addValue("user_role_id", user.getUserRole().getRoleId());
-            int count = namedParameterJdbcTemplate.update(AppSql.ADD_USER, mapSqlParameterSource);
-            return count > 0;
+        if (getUserByLogin(user.getUsername()).getUserId() != null) {
+            return false;
+        }
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("full_name", user.getFullname());
+        mapSqlParameterSource.addValue("username", user.getUsername());
+        mapSqlParameterSource.addValue("password", md5Generatorl.generateMd5(user.getPassword()));
+        mapSqlParameterSource.addValue("phone", user.getPhone());
+        mapSqlParameterSource.addValue("date_of_birthday", user.getDOB());
+        mapSqlParameterSource.addValue("user_role_id", user.getUserRole().getRoleId());
+        int count = namedParameterJdbcTemplate.update(AppSql.ADD_USER, mapSqlParameterSource);
+        return count > 0;
 
 
     }
@@ -101,19 +99,18 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean updateUser(User user) throws Exception {
 
 
-            MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-            mapSqlParameterSource.addValue("fullname", user.getFullname());
-            mapSqlParameterSource.addValue("username", user.getUsername());
-            mapSqlParameterSource.addValue("password",  md5Generatorl.generateMd5(user.getPassword()));
-            mapSqlParameterSource.addValue("userRoleId", user.getUserRole().getRoleId());
-            mapSqlParameterSource.addValue("phone", user.getPhone());
-            mapSqlParameterSource.addValue("dob", user.getDOB());
-            mapSqlParameterSource.addValue("userId", user.getUserId());
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("fullname", user.getFullname());
+        mapSqlParameterSource.addValue("username", user.getUsername());
+        mapSqlParameterSource.addValue("password", md5Generatorl.generateMd5(user.getPassword()));
+        mapSqlParameterSource.addValue("userRoleId", user.getUserRole().getRoleId());
+        mapSqlParameterSource.addValue("phone", user.getPhone());
+        mapSqlParameterSource.addValue("dob", user.getDOB());
+        mapSqlParameterSource.addValue("userId", user.getUserId());
 
-            int count = namedParameterJdbcTemplate.update(AppSql.UPDATE_USER, mapSqlParameterSource);
+        int count = namedParameterJdbcTemplate.update(AppSql.UPDATE_USER, mapSqlParameterSource);
 
-            return count > 0;
-
+        return count > 0;
 
 
     }
@@ -121,18 +118,26 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean deleteUser(Long userId) throws Exception {
 
-            MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-            mapSqlParameterSource.addValue("userId", userId);
-            int count = namedParameterJdbcTemplate.update(AppSql.DELETE_USER, mapSqlParameterSource);
-            return count > 0;
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("userId", userId);
+        int count = namedParameterJdbcTemplate.update(AppSql.DELETE_USER, mapSqlParameterSource);
+        return count > 0;
 
     }
 
     @Override
     public List<UserRole> userRoleList() throws Exception {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        List<UserRole>userRoleList=namedParameterJdbcTemplate.query(AppSql.GET_USER_ROLE_LIST,mapSqlParameterSource,userMapper::getUserRoleList);
+        List<UserRole> userRoleList = namedParameterJdbcTemplate.query(AppSql.GET_USER_ROLE_LIST, mapSqlParameterSource, userMapper::getUserRoleList);
         return userRoleList;
+    }
+
+    @Override
+    public List<User> getUserSearch(String keyword) throws Exception {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("keyword", keyword);
+        List<User> userList = namedParameterJdbcTemplate.query(AppSql.GET_USERS_SEARCH, mapSqlParameterSource, userMapper::getUserList);
+        return userList;
     }
 }
 

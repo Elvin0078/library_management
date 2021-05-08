@@ -300,8 +300,10 @@ function deleteBook(id) {
 
 
 function getUsers() {
-    // document.getElementById('searchFiels').dataset.options='user';
-    // document.getElementById('searchField').value= '';
+    document.getElementById('searchField').value = '';
+    document.getElementById('searchField').dataset.options = 'user';
+
+
     remove();
     removeBookTable();
     removePendingBookTable();
@@ -628,6 +630,7 @@ function givePendingBook(trId) {
         }
     });
 }
+
 function takePendingBook(trId) {
     $.ajax({
         url: getBaseUrl() + 'api/tr/unMarkTransactionDelivery',
@@ -860,8 +863,7 @@ function deletePendingBookUser(trİd) {
 }
 
 
-
-function searchBook(){
+function searchBook() {
 
     remove();
     removeUserTable();
@@ -871,7 +873,7 @@ function searchBook(){
     $.ajax({
         url: getBaseUrl() + 'api/book/searchBook',
         type: 'GET',
-        data:'keyword='+$('#searchField').val(),
+        data: 'keyword=' + $('#searchField').val(),
         dataType: 'JSON',
         success: function (data) {
 
@@ -898,6 +900,60 @@ function searchBook(){
         }
     })
 }
+
+
+function searchUser() {
+
+    remove();
+    removePendingBookTable();
+    removeDeliveryBookTable();
+    removeBookTable();
+    showUserTable();
+    $.ajax({
+        url: getBaseUrl() + 'api/book/searchUser',
+        type: 'GET',
+        data: 'keyword=' + $('#searchField').val(),
+        dataType: 'JSON',
+        success: function (data) {
+
+            var event_data = '';
+            $.each(data, function (index, value) {
+                event_data += '<tbody class="ui-widget-content">';
+                event_data += '   <tr>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.username + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.fullname + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.phone + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.dob + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.registrationDate + '</td>';
+                event_data += '      <td>';
+                event_data += '         <a onclick="editUser(' + value.userId + ')" data-toggle="modal" data-target="#updateModalUser" class="btn btn-primary" >Dəyiş</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                event_data += '         <a class="btn btn-danger" onclick="deleteUser(' + value.userId + ')" data-toggle="modal" data-target="#deleteModalUser">Sil</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                event_data += '      </td>';
+                event_data += '   </tr>';
+                event_data += '</tbody>';
+            });
+            $("#bookTable").append(event_data);
+        }
+    })
+}
+
+
+function searchControl() {
+    document.getElementById('searchField').dataset.options = 'book';
+
+
+
+    if (true) {
+       searchBook();
+
+    } else if (false) {
+        searchUser();
+    }
+
+
+}
+
+
 
 
 

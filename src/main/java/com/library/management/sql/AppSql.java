@@ -1,5 +1,7 @@
 package com.library.management.sql;
 
+import javax.swing.plaf.PanelUI;
+
 public class AppSql {
 
     public static final String GET_BOOK_LIST = "select b.Book_Id ,b.Author ,b.Name,b.Language,b.No_Copies_Actual,b.No_Copies_Current,b.Category_id,b.Publication_year , c.Category_name from Book_Details b \n" +
@@ -75,5 +77,10 @@ public class AppSql {
     public  static  final  String GET_BOOK_LIST_SEARCH="select b.Book_Id ,b.Author ,b.Name,b.Language,b.No_Copies_Actual,b.No_Copies_Current,b.Category_id,b.Publication_year , c.Category_name from Book_Details b \n" +
             "             inner Join  Category_Details c on b.Category_id =c.Category_id  where b.Active = 1 and (b.Author like :keyword or b.Name like :keyword or b.Language like :keyword or c.Category_name like :keyword );";
 
+    public static final String GET_BOOK_LIST_SEARCH_NUMERIC="select b.Book_Id ,b.Author ,b.Name,b.Language,b.No_Copies_Actual,b.No_Copies_Current,b.Category_id,b.Publication_year , c.Category_name from Book_Details b \n" +
+            "                         inner Join  Category_Details c on b.Category_id =c.Category_id  where b.Active = 1 and (b.No_Copies_Actual like :keyword or b.No_Copies_Current like :keyword or b.Publication_year like :keyword );";
+
+    public  static  final String GET_USERS_SEARCH="Select u.User_Id , u.Full_Name ,u.Username ,u.Phone ,u.Date_Of_Birthday ,u.Registration_Date ,  u.User_Role_Id,r.Role_name\n" +
+            "            from User_Details u inner join  Role_Details r on u.User_role_Id  = r.Role_Id where u.Active = 1 and (u.Full_Name like :keyword or u.Username like :keyword or u.Phone like :keyword or u.Date_Of_Birthday like :keyword);";
 
 }

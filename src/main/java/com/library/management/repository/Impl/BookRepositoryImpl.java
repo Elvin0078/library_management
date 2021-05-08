@@ -151,12 +151,22 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public List<Book> getBookSearch(String keyword) throws Exception {
-        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("keyword","%"+keyword+"%");
-        List<Book> bookList=namedParameterJdbcTemplate.query(AppSql.GET_BOOK_LIST_SEARCH,mapSqlParameterSource,bookMapper::getBookList);
 
+        List<Book> bookList;
+
+        System.out.println(keyword);
+
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         if (numericChecker.isNumeric(keyword)) {
-            System.out.println(true);
+
+            mapSqlParameterSource.addValue("keyword", keyword);
+            bookList = namedParameterJdbcTemplate.query(AppSql.GET_BOOK_LIST_SEARCH_NUMERIC, mapSqlParameterSource, bookMapper::getBookList);
+
+        } else {
+
+            mapSqlParameterSource.addValue("keyword", "%" + keyword + "%");
+            bookList = namedParameterJdbcTemplate.query(AppSql.GET_BOOK_LIST_SEARCH, mapSqlParameterSource, bookMapper::getBookList);
+
         }
 
 

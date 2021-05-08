@@ -23,5 +23,7 @@ public interface UserService {
 
     User getUserById(Long userId);
 
+    List<User>getUserSearch(String keyword);
+
 }
 

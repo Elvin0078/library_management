@@ -98,4 +98,14 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
+    @Override
+    public List<User> getUserSearch(String keyword) {
+        try {
+            return userRepository.getUserSearch(keyword);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

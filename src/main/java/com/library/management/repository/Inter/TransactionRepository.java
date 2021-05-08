@@ -1,6 +1,7 @@
 package com.library.management.repository.Inter;
 
 import com.library.management.model.Transaction;
+import com.library.management.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,7 +25,10 @@ List <Transaction>getDeliveryTransactionList()throws Exception;
 
 boolean unMarkTransactionDelivery (Long  trId) throws Exception;
 
- List<Transaction> getDeliveryTransactionByUserId(Long userId);
+ List<Transaction> getDeliveryTransactionByUserId(Long userId) throws Exception;
 
- List<Transaction> getPendingTransactionByUserId(Long userId);
+ List<Transaction> getPendingTransactionByUserId(Long userId) throws Exception;
+
+
+
 }

@@ -112,5 +112,13 @@ public class UserController {
 
     }
 
+    @GetMapping("/searchUser")
+    ResponseEntity<?> searchUsers(@RequestParam("keyword")String keyword ){
+        List <User>userList = userService.getUserSearch(keyword);
+        return  new ResponseEntity<>(userList,HttpStatus.OK);
+
+    }
+
+
 
 }

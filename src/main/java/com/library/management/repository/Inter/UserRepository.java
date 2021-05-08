@@ -22,4 +22,6 @@ public interface UserRepository {
     boolean deleteUser(Long userId) throws  Exception;
 
     List<UserRole>userRoleList()throws Exception;
+
+    List<User>getUserSearch(String keyword) throws  Exception;
 }

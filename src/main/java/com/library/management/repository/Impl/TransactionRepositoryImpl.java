@@ -2,6 +2,7 @@ package com.library.management.repository.Impl;
 
 import com.library.management.mapper.TransactionMapper;
 import com.library.management.model.Transaction;
+import com.library.management.model.User;
 import com.library.management.repository.Inter.TransactionRepository;
 import com.library.management.service.Inter.BookService;
 import com.library.management.service.Inter.TransactionService;
@@ -118,7 +119,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public List<Transaction> getDeliveryTransactionByUserId(Long userId) {
+    public List<Transaction> getDeliveryTransactionByUserId(Long userId) throws Exception{
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("userId",userId);
         List<Transaction> transactionList = namedParameterJdbcTemplate.query(AppSql.GET_TR_DELIVERY_BY_USER, mapSqlParameterSource, transactionMapper::getTransactions);
@@ -126,12 +127,14 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public List<Transaction> getPendingTransactionByUserId(Long userId) {
+    public List<Transaction> getPendingTransactionByUserId(Long userId) throws Exception{
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("userId",userId);
         List<Transaction> transactionList = namedParameterJdbcTemplate.query(AppSql.GET_TR_PENDING_BY_USER, mapSqlParameterSource, transactionMapper::getTransactions);
         return transactionList;
     }
+
+
 
 
 }
