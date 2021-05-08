@@ -955,5 +955,3 @@ function searchControl() {
     }
 
 }
-
-
