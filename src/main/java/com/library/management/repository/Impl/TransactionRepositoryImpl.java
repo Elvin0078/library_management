@@ -160,5 +160,15 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         return transactionList;
     }
 
+    @Override
+    public List<Transaction> getPendingTransactionByUserIdSearch(Long userId,String keyword) throws Exception {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("userId", userId);
+        mapSqlParameterSource.addValue("keyword", "%" + keyword + "%");
+        List<Transaction> transactionList = namedParameterJdbcTemplate.query(AppSql.GET_TR_PENDING_BY_USER_ID_SEARCH, mapSqlParameterSource, transactionMapper::getTransactions);
+        return transactionList;
+
+    }
+
 
 }

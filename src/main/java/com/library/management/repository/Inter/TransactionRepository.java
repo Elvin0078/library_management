@@ -34,6 +34,7 @@ public interface TransactionRepository {
     List <Transaction> getDeliveryTransactionByUserIdSearch (Long userId,String keyword)throws  Exception;
 
 
+    List<Transaction> getPendingTransactionByUserIdSearch(Long userId,String keyword) throws Exception;
 
 
 

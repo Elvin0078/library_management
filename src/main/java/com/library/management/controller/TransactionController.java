@@ -136,6 +136,17 @@ public class TransactionController {
 
     }
 
+    @GetMapping("getPendingTransactionByUserIdSearch")
+    ResponseEntity<?> getPendingTransactionByUserIdSearch(@RequestParam("keyword")String keyword){
+        CustomUserDetails customUserDetails = (CustomUserDetails) authenticationFacade.getAuthentication().getPrincipal();
+        val rs = userService.getUserByLogin(customUserDetails.getUsername());
+
+        List<Transaction> transactionList = transactionService.getPendingTransactionByUserIdSearch(rs.getUserId(),keyword);
+        return new ResponseEntity<>(transactionList,HttpStatus.OK);
+
+
+    }
+
 
 }
 

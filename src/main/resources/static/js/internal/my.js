@@ -783,6 +783,10 @@ function getDeliveryBooksUser() {
 }
 
 function getPendingBooksUser() {
+
+
+    document.getElementById('searchField').value = '';
+    document.getElementById('searchField').dataset.options = 'bookPending';
     remove();
     //
     removeBookTable();
@@ -1062,7 +1066,13 @@ function searchControlUser(){
     }else if (document.getElementById('searchField').dataset.options === 'bookDelivery'){
 
         getDeliveryBooksUserSearch();
+    }else if (document.getElementById('searchField').dataset.options === 'bookPending'){
+        getPendingBooksUserSearch();
     }
+
+
+
+
 
 
 
@@ -1116,6 +1126,7 @@ function searchBookUSer() {
 }
 
 function getDeliveryBooksUserSearch() {
+
     remove();
     removeBookTable();
     removePendingBookTable();
@@ -1166,7 +1177,43 @@ function getDeliveryBooksUserSearch() {
 }
 
 
+function getPendingBooksUserSearch() {
+    remove();
+    //
+    removeBookTable();
+    removeDeliveryBookTable();
+    showPendingBookTable();
+    showSearchArea();
+    $.ajax({
+        url: getBaseUrl() + 'api/tr/getPendingTransactionByUserIdSearch',
+        data: 'keyword=' + $('#searchField').val(),
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (data) {
 
+            var event_data = '';
+            $.each(data, function (index, value) {
+                event_data += '<tbody class="ui-widget-content">';
+                event_data += '   <tr>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.book.name + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.book.author + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.book.language + '</td>';
+                // event_data += '      <td>&nbsp;&nbsp;' + value.book.bookCategory.name + '</td>';
+                // event_data += '      <td>&nbsp;&nbsp;' + value.book.publicationyear + '</td>';
+                event_data += '                                                  <td>';
+                event_data += '                                                   <td>';
+                event_data += '                                                   <td>';
+                event_data += '                                                   <td>';
+                event_data += '         <a class="btn btn-danger" onclick="deletePendingBookUser(' + value.trId + ')">Ləğv et</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                event_data += '      </td>';
+                event_data += '   </tr>';
+                event_data += '</tbody>';
+            });
+            $("#pendingBookTable").append(event_data);
+        }
+    })
+
+}
 
 
 

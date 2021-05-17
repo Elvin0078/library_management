@@ -72,7 +72,7 @@ public class AppSql {
 
     public  static final String GET_TR_DELIVERY_BY_USER=GET_TRANSACTİON_MAIN+ " where u.user_Id=:userId and (t.Status=3 or t.Status=5) ";
 
-    public static final  String GET_TR_PENDING_BY_USER=GET_TRANSACTİON_MAIN+ " where t.Status=1 and u.user_Id=:userId ;";
+    public static final  String GET_TR_PENDING_BY_USER=GET_TRANSACTİON_MAIN+ " where t.Status=1 and u.user_Id=:userId ";
 
     public  static  final  String GET_BOOK_LIST_SEARCH="select b.Book_Id ,b.Author ,b.Name,b.Language,b.No_Copies_Actual,b.No_Copies_Current,b.Category_id,b.Publication_year , c.Category_name from Book_Details b \n" +
             "             inner Join  Category_Details c on b.Category_id =c.Category_id  where b.Active = 1 and (b.Author like :keyword or b.Name like :keyword or b.Language like :keyword or c.Category_name like :keyword );";
@@ -88,4 +88,6 @@ public class AppSql {
     public  static  final  String GET_TR_PENDING_SEARCH = GET_TR_PENDING +" and  (u.Full_Name like :keyword or  u.Phone like :keyword or  b.Name like :keyword or b.Author like :keyword );";
 
     public   static  final String GET_TR_DELIVERY_BY_USER_ID_SEARCH =GET_TR_DELIVERY_BY_USER + " and    (  b.Name like :keyword or b.Author like :keyword or b.language like :keyword)";
+
+    public static  final  String GET_TR_PENDING_BY_USER_ID_SEARCH = GET_TR_PENDING_BY_USER + " and  (  b.Name like :keyword or b.Author like :keyword or b.language like :keyword)";
 }
