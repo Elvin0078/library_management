@@ -25,4 +25,9 @@ public interface TransactionService {
     List<Transaction> getDeliveryTransactionByUserId(Long userId);
 
     List<Transaction> getPendingTransactionByUserId(Long userId);
+
+    List<Transaction> getDeliveryTransactionSearch(String keyword) ;
+
+    List<Transaction> getPendingTransactionSearch(String keyword) ;
+
 }

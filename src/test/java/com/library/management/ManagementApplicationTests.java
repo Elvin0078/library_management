@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.security.PublicKey;
 
 @SpringBootTest
@@ -39,8 +40,10 @@ class ManagementApplicationTests {
     void contextLoads() {
 
         try {
+            System.out.println(transactionRepository.getPendingTransactionSearch("Elvin").toString());
 
-            System.out.println(userService.getUserSearch("Elvin").toString());
+
+//            System.out.println(userService.getUserSearch("Elvin").toString());
 
 //            Transaction transaction = new Transaction();
 //

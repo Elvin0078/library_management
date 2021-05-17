@@ -112,6 +112,19 @@ public class TransactionController {
         return new ResponseEntity<>(trList, HttpStatus.OK);
     }
 
+    @GetMapping("getDeliveryTransactionSearch")
+    ResponseEntity<?> getDeliveryTransactionSearch(@RequestParam ("keyword")String keyword ){
+        List<Transaction>transactionList = transactionService.getDeliveryTransactionSearch(keyword);
+        return new ResponseEntity<>(transactionList,HttpStatus.OK);
+    }
+
+    @GetMapping("getPendingTransactionSearch")
+    ResponseEntity<?> getPendingTransactionSearch(@RequestParam ("keyword")String keyword ){
+        List<Transaction>transactionList = transactionService.getPendingTransactionSearch(keyword);
+        return new ResponseEntity<>(transactionList,HttpStatus.OK);
+    }
+
+
 
 }
 

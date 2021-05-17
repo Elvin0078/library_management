@@ -119,4 +119,26 @@ public class TransactionServiceImpl implements TransactionService {
             return null;
         }
     }
+
+    @Override
+    public List<Transaction> getDeliveryTransactionSearch(String keyword) {
+        try {
+            return transactionRepository.getDeliveryTransactionSearch(keyword);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+
+        }
+    }
+
+    @Override
+    public List<Transaction> getPendingTransactionSearch(String keyword) {
+        try {
+            return transactionRepository.getPendingTransactionSearch(keyword);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+
+        }
+    }
 }

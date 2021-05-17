@@ -59,7 +59,7 @@ public class AppSql {
             "    inner join Book_Details b\n" +
             "\ton t.Book_Id = b.Book_Id";
 
-    public static final String GET_TR_PENDING =GET_TRANSACTİON_MAIN+" where t.Status=1 or t.Status=5";
+    public static final String GET_TR_PENDING =GET_TRANSACTİON_MAIN+" where (t.Status=1 or t.Status=5 ) ";
 
     public static final String GET_TR_DELIVERY =GET_TRANSACTİON_MAIN+" where t.Status=3";
 
@@ -82,5 +82,9 @@ public class AppSql {
 
     public  static  final String GET_USERS_SEARCH="Select u.User_Id , u.Full_Name ,u.Username ,u.Phone ,u.Date_Of_Birthday ,u.Registration_Date ,  u.User_Role_Id,r.Role_name\n" +
             "            from User_Details u inner join  Role_Details r on u.User_role_Id  = r.Role_Id where u.Active = 1 and (u.Full_Name like :keyword or u.Username like :keyword or u.Phone like :keyword or u.Date_Of_Birthday like :keyword);";
+
+    public static final String GET_TR_DELIVERY_SEARCH =GET_TRANSACTİON_MAIN+" where t.Status=3 and  (u.Full_Name like :keyword or  u.Phone like :keyword or  b.Name like :keyword or b.Author like :keyword or b.Language like :keyword);";
+
+    public  static  final  String GET_TR_PENDING_SEARCH = GET_TR_PENDING +" and  (u.Full_Name like :keyword or  u.Phone like :keyword or  b.Name like :keyword or b.Author like :keyword );";
 
 }

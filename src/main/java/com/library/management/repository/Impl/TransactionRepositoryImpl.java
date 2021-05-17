@@ -118,22 +118,38 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     }
 
     @Override
-    public List<Transaction> getDeliveryTransactionByUserId(Long userId) throws Exception{
+    public List<Transaction> getDeliveryTransactionByUserId(Long userId) throws Exception {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("userId",userId);
+        mapSqlParameterSource.addValue("userId", userId);
         List<Transaction> transactionList = namedParameterJdbcTemplate.query(AppSql.GET_TR_DELIVERY_BY_USER, mapSqlParameterSource, transactionMapper::getTransactions);
         return transactionList;
     }
 
     @Override
-    public List<Transaction> getPendingTransactionByUserId(Long userId) throws Exception{
+    public List<Transaction> getPendingTransactionByUserId(Long userId) throws Exception {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("userId",userId);
+        mapSqlParameterSource.addValue("userId", userId);
         List<Transaction> transactionList = namedParameterJdbcTemplate.query(AppSql.GET_TR_PENDING_BY_USER, mapSqlParameterSource, transactionMapper::getTransactions);
         return transactionList;
     }
 
+    @Override
+    public List<Transaction> getDeliveryTransactionSearch(String keyword) throws Exception {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("keyword", "%" + keyword + "%");
+        List<Transaction> transactionList = namedParameterJdbcTemplate.query(AppSql.GET_TR_DELIVERY_SEARCH, mapSqlParameterSource, transactionMapper::getTransactions);
+        return transactionList;
+    }
 
+    @Override
+    public List<Transaction> getPendingTransactionSearch(String keyword) throws Exception {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("keyword", "%" + keyword + "%");
+        List<Transaction> transactionList = namedParameterJdbcTemplate.query(AppSql.GET_TR_PENDING_SEARCH, mapSqlParameterSource, transactionMapper::getTransactions);
+        return transactionList;
+
+
+    }
 
 
 }
