@@ -30,4 +30,7 @@ public interface TransactionService {
 
     List<Transaction> getPendingTransactionSearch(String keyword) ;
 
+    List <Transaction> getDeliveryTransactionByUserIdSearch (Long userId,String keyword);
+
+
 }

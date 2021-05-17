@@ -113,17 +113,28 @@ public class TransactionController {
     }
 
     @GetMapping("getDeliveryTransactionSearch")
-    ResponseEntity<?> getDeliveryTransactionSearch(@RequestParam ("keyword")String keyword ){
-        List<Transaction>transactionList = transactionService.getDeliveryTransactionSearch(keyword);
-        return new ResponseEntity<>(transactionList,HttpStatus.OK);
+    ResponseEntity<?> getDeliveryTransactionSearch(@RequestParam("keyword") String keyword) {
+        List<Transaction> transactionList = transactionService.getDeliveryTransactionSearch(keyword);
+        return new ResponseEntity<>(transactionList, HttpStatus.OK);
     }
 
     @GetMapping("getPendingTransactionSearch")
-    ResponseEntity<?> getPendingTransactionSearch(@RequestParam ("keyword")String keyword ){
-        List<Transaction>transactionList = transactionService.getPendingTransactionSearch(keyword);
-        return new ResponseEntity<>(transactionList,HttpStatus.OK);
+    ResponseEntity<?> getPendingTransactionSearch(@RequestParam("keyword") String keyword) {
+        List<Transaction> transactionList = transactionService.getPendingTransactionSearch(keyword);
+        return new ResponseEntity<>(transactionList, HttpStatus.OK);
     }
 
+    @GetMapping("getDeliveryTransactionByUserIdSearch")
+    ResponseEntity<?> getDeliveryTransactionByUserIdSearch(@RequestParam("keyword") String keyword) {
+
+        CustomUserDetails customUserDetails = (CustomUserDetails) authenticationFacade.getAuthentication().getPrincipal();
+        val rs = userService.getUserByLogin(customUserDetails.getUsername());
+
+        List<Transaction> transactionList = transactionService.getDeliveryTransactionByUserIdSearch(rs.getUserId(), keyword);
+
+        return new ResponseEntity<>(transactionList, HttpStatus.OK);
+
+    }
 
 
 }

@@ -141,4 +141,14 @@ public class TransactionServiceImpl implements TransactionService {
 
         }
     }
+
+    @Override
+    public List<Transaction> getDeliveryTransactionByUserIdSearch(Long userId, String keyword) {
+        try {
+          return  transactionRepository.getDeliveryTransactionByUserIdSearch(userId,keyword);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

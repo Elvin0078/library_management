@@ -131,7 +131,6 @@ function getBooks() {
     //
     removeUserTable();
     removePendingBookTable();
-    hideSearchArea();
     removeDeliveryBookTable();
     showBookTable();
     showSearchArea();
@@ -307,7 +306,6 @@ function getUsers() {
     remove();
     removeBookTable();
     removePendingBookTable();
-    hideSearchArea();
     removeDeliveryBookTable();
     showUserTable();
     showSearchArea();
@@ -501,7 +499,7 @@ function getBooksUser() {
 
     removeUserTable();
     removePendingBookTable();
-    hideSearchArea();
+
     removeDeliveryBookTable();
     showBookTable();
     showSearchArea();
@@ -732,13 +730,15 @@ function deleteDeliveryBook(trId) {
 }
 
 function getDeliveryBooksUser() {
+
+    document.getElementById('searchField').value = '';
+    document.getElementById('searchField').dataset.options = 'bookDelivery';
     remove();
     //
     removeBookTable();
     removePendingBookTable();
-    hideSearchArea();
     showDeliveryBookTable();
-    hideSearchArea();
+    showSearchArea();
     $.ajax({
         url: getBaseUrl() + 'api/tr/getDeliveryTransactionByUserId',
         type: 'GET',
@@ -787,9 +787,8 @@ function getPendingBooksUser() {
     //
     removeBookTable();
     removeDeliveryBookTable();
-    hideSearchArea();
     showPendingBookTable();
-    hideSearchArea();
+    showSearchArea();
     $.ajax({
         url: getBaseUrl() + 'api/tr/getPendingTransactionByUserId',
         type: 'GET',
@@ -947,8 +946,7 @@ function searchUser() {
 }
 
 
-
-function searchDeliveryTransaction(){
+function searchDeliveryTransaction() {
 
     remove();
     //
@@ -1038,9 +1036,6 @@ function searchPendingTransactions() {
 }
 
 
-
-
-
 function searchControl() {
 
     if (document.getElementById('searchField').dataset.options === 'book') {
@@ -1050,11 +1045,131 @@ function searchControl() {
 
         searchUser();
 
-    }
-    else if (document.getElementById('searchField').dataset.options === 'deliveryBook' ){
+    } else if (document.getElementById('searchField').dataset.options === 'deliveryBook') {
         searchDeliveryTransaction();
-    } else if (document.getElementById('searchField').dataset.options === 'pendingBook' ){
+    } else if (document.getElementById('searchField').dataset.options === 'pendingBook') {
         searchPendingTransactions();
     }
 
 }
+
+
+function searchControlUser(){
+
+    if (document.getElementById('searchField').dataset.options === 'book') {
+
+        searchBookUSer();
+    }else if (document.getElementById('searchField').dataset.options === 'bookDelivery'){
+
+        getDeliveryBooksUserSearch();
+    }
+
+
+
+}
+
+
+function searchBookUSer() {
+
+    remove();
+
+    removeUserTable();
+    removePendingBookTable();
+    removeDeliveryBookTable();
+    showBookTable();
+    showSearchArea();
+
+    $.ajax({
+        url: getBaseUrl() + 'api/book/searchBook',
+        type: 'GET',
+        data: 'keyword=' + $('#searchField').val(),
+        dataType: 'JSON',
+        success: function (data) {
+
+            var event_data = '';
+            $.each(data, function (index, value) {
+                event_data += '<tbody class="ui-widget-content">';
+                event_data += '   <tr>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.name + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.author + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.language + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.noCopiesActual + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.noCopiesCurrent + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.bookCategory.name + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.publicationyear + '</td>';
+
+                if (value.noCopiesCurrent > 0) {
+                    event_data += '      <td>';
+                    event_data += '         <a onclick="markBook(' + value.id + ')" class="btn btn-primary" >Rezerv et</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                    event_data += '      </td>';
+                } else {
+                    event_data += '      <td>';
+                    event_data += '      </td>';
+                }
+                event_data += '   </tr>';
+                event_data += '</tbody>';
+            });
+            $("#bookTable").append(event_data);
+        }
+    })
+
+}
+
+function getDeliveryBooksUserSearch() {
+    remove();
+    removeBookTable();
+    removePendingBookTable();
+    showDeliveryBookTable();
+    showSearchArea();
+    $.ajax({
+        url: getBaseUrl() + 'api/tr/getDeliveryTransactionByUserIdSearch',
+        data: 'keyword=' + $('#searchField').val(),
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (data) {
+            var statusName;
+
+
+            var event_data = '';
+            $.each(data, function (index, value) {
+
+
+                if (value.status == 3) {
+                    statusName = "Istifadəçidə";
+                } else if (value.status == 5) {
+                    statusName = "Qaytarilmaq üçün gözləmədə";
+                }
+
+
+                event_data += '<tbody class="ui-widget-content">';
+                event_data += '   <tr>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.book.name + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.book.author + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + value.book.language + '</td>';
+                // event_data += '      <td>&nbsp;&nbsp;' + value.book.bookCategory.name + '</td>';
+                // event_data += '      <td>&nbsp;&nbsp;' + value.book.publicationyear + '</td>';
+                event_data += '      <td>&nbsp;&nbsp;' + statusName + '</td>';
+                ;
+                event_data += '                                                  <td>';
+                event_data += '                                                   <td>';
+                event_data += '                                                   <td>';
+                event_data += '                                                   <td>';
+
+                event_data += '         <a class="btn btn-danger" onclick="deleteDeliveryBookUser(' + value.trId + ')">Təhvil vermək</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+                event_data += '      </td>';
+                event_data += '   </tr>';
+                event_data += '</tbody>';
+            });
+            $("#deliveryBookTable").append(event_data);
+        }
+    })
+}
+
+
+
+
+
+
+
+
+

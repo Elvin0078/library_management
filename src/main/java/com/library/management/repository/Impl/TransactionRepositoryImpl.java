@@ -151,5 +151,14 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
     }
 
+    @Override
+    public List<Transaction> getDeliveryTransactionByUserIdSearch(Long userId, String keyword) throws Exception {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("userId",userId);
+        mapSqlParameterSource.addValue("keyword", "%" + keyword + "%");
+        List<Transaction>transactionList = namedParameterJdbcTemplate.query(AppSql.GET_TR_DELIVERY_BY_USER_ID_SEARCH,mapSqlParameterSource,transactionMapper::getTransactions);
+        return transactionList;
+    }
+
 
 }
