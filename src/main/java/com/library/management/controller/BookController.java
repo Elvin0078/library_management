@@ -44,7 +44,8 @@ public class BookController {
 //    }
 
 
-    @GetMapping("/newBook")
+
+//    @RequestMapping(value = "/newBook",method = RequestMethod.GET)
     @PostMapping("/newBook")
     public ResponseEntity<?> addBook(
             @RequestParam("bookName") String bookName,

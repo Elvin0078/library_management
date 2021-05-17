@@ -197,7 +197,7 @@ function addBook() {
         let book = `bookName=${bookName}&author=${author}&language=${language}&noCopiesActual=${noCopiesActual}&noCopiesCurrent=${noCopiesCurrent}&bookCategoryId=${bookCategoryId}&publicationYear=${publicationYear}`;
         $.ajax({
                 url: getBaseUrl() + 'api/book/newBook',
-                method: 'GET',
+                method: 'POST',
                 data: book,
                 dataType: 'JSON',
                 success: function (data) {
@@ -214,7 +214,7 @@ function addBook() {
                     }
                 },
                 error: function () {
-                    alert('Xəta baş verdi!')
+                    alert('Xəta baş verdi!');
                 }
 
 
