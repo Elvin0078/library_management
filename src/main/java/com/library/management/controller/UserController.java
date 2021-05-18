@@ -7,10 +7,7 @@ import com.library.management.util.DataConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +35,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/newUser")
+    @PostMapping("/newUser")
     public ResponseEntity<?> addUser(@RequestParam("fullname") String fullname,
                                      @RequestParam("username") String username,
                                      @RequestParam("password") String password,
@@ -60,7 +57,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/updateUser")
+    @PutMapping("/updateUser")
     public ResponseEntity<?> updateUser(@RequestParam("fullName") String fullname,
                                         @RequestParam("username") String username,
                                         @RequestParam("password") String password,
@@ -105,7 +102,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/deleteUser")
+    @PutMapping("/deleteUser")
     ResponseEntity<?> deleteUser(@RequestParam("userId") Long userId) {
         boolean result = userService.deleteUser(userId);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -118,7 +115,5 @@ public class UserController {
         return  new ResponseEntity<>(userList,HttpStatus.OK);
 
     }
-
-
 
 }

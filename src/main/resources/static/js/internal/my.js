@@ -240,7 +240,7 @@ function updateBook() {
         let book = `bookId=${$("#bookIdUpdate").val()}&name=${bookName}&author=${author}&language=${language}&noCopiesActual=${noCopiesActual}&noCopiesCurrent=${noCopiesCurrent}&bookCategoryId=${bookCategoryId}&publicationyear=${publicationYear}`;
         $.ajax({
             url: getBaseUrl() + 'api/book/updateBook',
-            method: 'GET',
+            method: 'PUT',
             data: book,
             dataType: 'JSON',
             success: function (data) {
@@ -282,7 +282,7 @@ function deleteBook(id) {
     if (confirm("Silmək istədiyinizə əminsiz?")) {
         $.ajax({
             url: getBaseUrl() + 'api/book/deleteBook',
-            method: 'GET',
+            method: 'PUT',
             data: "bookId=" + id,
             dataType: 'JSON',
             success: function (data) {
@@ -376,7 +376,7 @@ function addUser() {
                     let user = `username=${username}&password=${password}&fullname=${fullName}&dob=${dob}&phone=${phone}&userRoleId=${userRoleId}`;
                     $.ajax({
                         url: getBaseUrl() + 'api/user/newUser',
-                        method: 'GET',
+                        method: 'POST',
                         data: user,
                         dataType: 'JSON',
                         success: function (data) {
@@ -446,7 +446,7 @@ function updateUser() {
 
                 $.ajax({
                     url: getBaseUrl() + 'api/user/updateUser',
-                    method: 'GET',
+                    method: 'PUT',
                     data: user,
                     dataType: 'JSON',
                     success: function (data) {
@@ -472,7 +472,7 @@ function deleteUser(userId) {
         $.ajax({
             url: getBaseUrl() + 'api/user/deleteUser',
             data: 'userId=' + userId,
-            type: 'GET',
+            type: 'PUT',
             dataType: 'JSON',
             success: function (data) {
                 if (data === true) {
@@ -543,7 +543,7 @@ function getBooksUser() {
 function markBook(id) {
     $.ajax({
         url: getBaseUrl() + 'api/tr/addTransaction',
-        method: 'GET',
+        method: 'POST',
         data: "bookId=" + id,
         dataType: 'JSON',
         success: function (data) {
@@ -634,7 +634,7 @@ function givePendingBook(trId) {
 function takePendingBook(trId) {
     $.ajax({
         url: getBaseUrl() + 'api/tr/unMarkTransactionDelivery',
-        method: 'GET',
+        method: 'PUT',
         data: "trId=" + trId,
         dataType: 'JSON',
         success: function (data) {
@@ -652,7 +652,7 @@ function takePendingBook(trId) {
 function deletePendingBook(trId) {
     $.ajax({
         url: getBaseUrl() + 'api/tr/updateTransactionStatus',
-        method: 'GET',
+        method: 'PUT',
         data: "trId=" + trId + "&statusId=" + 0,
         dataType: 'JSON',
         success: function (data) {
@@ -710,7 +710,7 @@ function getDeliveryBooks() {
 function deleteDeliveryBook(trId) {
     $.ajax({
         url: getBaseUrl() + 'api/tr/unMarkTransactionDelivery',
-        method: 'GET',
+        method: 'PUT',
         data: "trId=" + trId + "&statusId=" + 4,
         dataType: 'JSON',
         success: function (data) {
@@ -830,7 +830,7 @@ function deleteDeliveryBookUser(trİd) {
         url: getBaseUrl() + 'api/tr/updateTransactionStatus',
         data: 'trId=' + trİd + '&statusId=' + 5,
         dataType: 'JSON',
-        method: 'GET',
+        method: 'PUT',
         success: function (data) {
             if (data === true) {
                 getDeliveryBooksUser();
@@ -853,7 +853,7 @@ function deletePendingBookUser(trİd) {
         url: getBaseUrl() + 'api/tr/updateTransactionStatus',
         data: 'trId=' + trİd + '&statusId=' + 6,
         dataType: 'JSON',
-        method: 'GET',
+        method: 'PUt',
         success: function (data) {
             if (data === true) {
                 getPendingBooksUser();

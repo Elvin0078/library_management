@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,7 +42,7 @@ public class TransactionController {
         return new ResponseEntity<>(trList, HttpStatus.OK);
     }
 
-    @GetMapping("/addTransaction")
+    @PostMapping("/addTransaction")
     public ResponseEntity<?> addTransaction(@RequestParam("bookId") Long bookId) {
 
         CustomUserDetails customUserDetails = (CustomUserDetails) authenticationFacade.getAuthentication().getPrincipal();
@@ -62,7 +60,7 @@ public class TransactionController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/updateTransactionStatus")
+    @PutMapping("/updateTransactionStatus")
     public ResponseEntity<?> updateTransactionStatus(@RequestParam("statusId") Long statusId,
                                                      @RequestParam("trId") Long trId) {
         boolean result = transactionService.updateTransactionStatus(statusId, trId);
@@ -76,14 +74,14 @@ public class TransactionController {
         return new ResponseEntity<>(trList, HttpStatus.OK);
     }
 
-    @GetMapping("/markTransactionDelivery")
+    @PutMapping("/markTransactionDelivery")
     ResponseEntity<?> markTransactionDelivery(@RequestParam("trId") Long trId) {
         boolean result = transactionService.markTransactionDelivery(trId);
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
 
-    @GetMapping("/unMarkTransactionDelivery")
+    @PutMapping("/unMarkTransactionDelivery")
     ResponseEntity<?> unMarkTransactionDelivery(@RequestParam("trId") Long trId) {
         boolean result = transactionService.unMarkTransactionDelivery(trId);
         return new ResponseEntity<>(result, HttpStatus.OK);

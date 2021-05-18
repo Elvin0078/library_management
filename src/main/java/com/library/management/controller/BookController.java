@@ -18,7 +18,6 @@ public class BookController {
 
 
     @GetMapping("/bookList")
-
     public ResponseEntity<?> getbookList() {
         List<Book> bookList = bookService.getAllBook();
 
@@ -66,7 +65,7 @@ public class BookController {
     }
 
 
-    @GetMapping("/updateBook")
+    @PutMapping("/updateBook")
 //    @PostMapping("/updateBook")
     public ResponseEntity<?> updateBook(@RequestParam("bookId") Long bookId,
                                         @RequestParam("name") String bookName,
@@ -95,7 +94,7 @@ public class BookController {
     }
 
 
-    @GetMapping("/deleteBook")
+    @PutMapping("/deleteBook")
     public ResponseEntity<?> deleteBook(@RequestParam("bookId") Long bookId) {
         boolean result = bookService.deleteBook(bookId);
         return new ResponseEntity<>(result, HttpStatus.OK);
